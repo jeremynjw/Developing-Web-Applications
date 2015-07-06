@@ -162,5 +162,27 @@ namespace dwa_hansel {
             else         
                 return -2;  //No update as the record is not found. 
         }
+
+        public int Delete() {
+            // Read connection string
+            string strConn = ConfigurationManager.ConnectionStrings["DWABookConnectionString"].ToString();
+
+            // Instantiate a SqlConnection obj with the Connection String read
+            SqlConnection conn = new SqlConnection(strConn.ToString());
+
+            // Instantiate a SqlCommand obj, provide a DELETE SQL statement
+            // to delete a staff record specified by a Staff ID.
+            SqlCommand cmd = new SqlCommand("DELETE FROM Staff " +
+                                            "WHERE StaffID = @selectedStaffID", conn);
+
+            // Open a database connection
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            // Close a database connection
+            conn.Close();
+
+            // Return 0 when no error occurs
+            return 0;
+        }
     }
 }

@@ -62,6 +62,7 @@
   <ItemGroup>
     <Content Include="AddStaff.aspx" />
     <Content Include="ConfirmAddStaff.aspx" />
+    <Content Include="DeleteStaff.aspx" />
     <Content Include="EditStaff.aspx" />
     <Content Include="FineCalculator.aspx" />
     <Content Include="Global.asax" />
@@ -103,6 +104,13 @@
     </Compile>
     <Compile Include="ConfirmAddStaff.aspx.designer.cs">
       <DependentUpon>ConfirmAddStaff.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteStaff.aspx.cs">
+      <DependentUpon>DeleteStaff.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DeleteStaff.aspx.designer.cs">
+      <DependentUpon>DeleteStaff.aspx</DependentUpon>
     </Compile>
     <Compile Include="EditStaff.aspx.cs">
       <DependentUpon>EditStaff.aspx</DependentUpon>
