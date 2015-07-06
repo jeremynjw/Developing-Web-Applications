@@ -5,6 +5,10 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+
 namespace dwa_hansel {
     public partial class EditStaff : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
@@ -14,9 +18,10 @@ namespace dwa_hansel {
                 ddlNationality.Items.Add("Indonesia");     
                 ddlNationality.Items.Add("China");  
 
-                ddlBranch.Items.Add("1");     // *** this is hardcoding, but we will learn how to import data from db to ddl
-                ddlBranch.Items.Add("2");     
-                ddlBranch.Items.Add("3");  
+                //ddlBranch.Items.Add("1");     // *** this is hardcoding, but we will learn how to import data from db to ddl
+                //ddlBranch.Items.Add("2");     
+                //ddlBranch.Items.Add("3");  
+                displayBranchDropDownList();
 
                 if (Request.QueryString["staffid"] != null) { // *** check if there is a querystring that exists
                     //Create a new Staff object           
@@ -73,7 +78,10 @@ namespace dwa_hansel {
                 objStaff.Email = txtEmail.Text.Trim(); 
                 objStaff.Nationality = ddlNationality.SelectedValue; 
                 objStaff.IsFullTime = chkFullTime.Checked;
-                objStaff.BranchNo = Convert.ToInt32(ddlBranch.SelectedValue); 
+                if (ddlBranch.SelectedIndex != 0) // Prevent errors if user does not select
+                    objStaff.BranchNo = Convert.ToInt32(ddlBranch.SelectedValue);
+                else
+                    objStaff.BranchNo = 0;
                 
                 int errorCode = objStaff.Update();
                 if (errorCode == 0) { 
@@ -83,6 +91,41 @@ namespace dwa_hansel {
                     lblMessage.ForeColor = System.Drawing.Color.Red; 
                 }
             }
+        }
+
+        private void displayBranchDropDownList() {
+            // Read connection
+            string strConn = ConfigurationManager.ConnectionStrings["DWABookConnectionString"].ToString();
+
+            // Create a SqlConnection object with the Connection String
+            SqlConnection conn = new SqlConnection(strConn);
+
+            // Create SqlCommand obj, with SQL statement to retrieve
+            SqlCommand cmd = new SqlCommand("SELECT * FROM Branch", conn);
+
+            // Create a DataAdapter obj
+            SqlDataAdapter daBranch = new SqlDataAdapter(cmd);
+
+            // Create DataSet obj
+            DataSet result = new DataSet();
+
+            // Open a Database connection
+            conn.Open();
+            // Use DataAdapter to fill DataSet result to a table "BranchDetails"
+            daBranch.Fill(result, "BranchDetails");
+            // Close Database connection
+            conn.Close();
+
+            // Specify the dropdown list to get data from the DataSet
+            ddlBranch.DataSource = result.Tables["BranchDetails"];
+            ddlBranch.DataTextField = "address";
+            ddlBranch.DataValueField = "branchNo";
+
+            // Load Branch infomation to the drop-down list
+            ddlBranch.DataBind();
+
+            //Insert prompt for the DropDownList at the first position of the list     
+            ddlBranch.Items.Insert(0, "(No branch selected)");
         }
     }
 }
