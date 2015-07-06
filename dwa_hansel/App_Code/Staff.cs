@@ -109,9 +109,9 @@ namespace dwa_hansel {
                     IsFullTime = Convert.ToBoolean(result.Tables["StaffDetails"].Rows[0]["Status"]);
                 
                 //branchNo  
-                if(!DBNull.Value.Equals(result.Tables["StaffDetails"].Rows[0]["BranchNo"]))           
-                    BranchNo = Convert.ToInt32(result.Tables["StaffDetails"].Rows[0]["BranchNo"]); 
-
+                if (!DBNull.Value.Equals(result.Tables["StaffDetails"].Rows[0]["BranchNo"]))
+                    BranchNo = Convert.ToInt32(result.Tables["StaffDetails"].Rows[0]["BranchNo"]);
+                
                 return 0;     
             } else {
                 // No record found
@@ -146,7 +146,12 @@ namespace dwa_hansel {
             cmd.Parameters.AddWithValue("@email", Email);     
             cmd.Parameters.AddWithValue("@nationality",Nationality);     
             cmd.Parameters.AddWithValue("@status", IsFullTime);     
-            cmd.Parameters.AddWithValue("@branchNo", BranchNo);     
+
+            if (BranchNo == 0)
+                cmd.Parameters.AddWithValue("@branchNo", DBNull.Value);     
+            else
+                cmd.Parameters.AddWithValue("@branchNo", BranchNo);
+
             cmd.Parameters.AddWithValue("@selectedStaffID", StaffId);  
 
             //Open a database connection.     
