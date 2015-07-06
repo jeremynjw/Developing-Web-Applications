@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- Not for display -->
+    <title>NP Book Rental</title>
+</head>
+<body style="font-family:Arial">
+    <!-- For display -->
+    <!-- Centralise the table between margins -->
+    <table style="margin: auto">
+        <tr><!-- 1st Row -->
+            <td style="vertical-align: top"><!-- Left Column // a stands for anchor, href stands for hypertext reference-->
+                <a href="http://www.np.edu.sg/ict/" target="_blank">
+                    <!-- Border width 0 is to remove blue border on older IE browsers -->
+                    <img src="Images/nplogo.gif" style="border-width: 0;"/>
+                </a>
+            </td>
+            <td><!-- Right Column -->
+                <!-- Two methods, get and post - ASP.NET extensions are Aspx, written in C# -->
+                <form name="Login" method="post" action="Login.aspx">
+                    Login ID:<br />
+                    <input type="email" name="LoginID" placeholder="email Address" required /><br />
+                    Password:<br />
+                    <input type="password" name="password" required="required" /><br />
+                    <input type="radio" name="user" value="Staff" checked="checked" />Staff
+                    <input type="radio" name="user" value="Customer" />Customer<br />
+                    <input type="submit" value="Login" />
+                </form>
+            </td>
+        </tr>
+        <tr><!-- 2nd Row -->
+            <td colspan="2" style="text-align: center">
+                <img src="Images/logo.jpg" id="logo"; style="width:800px; height:314px;"/>
+                <p>Practical exercises for DWA (Developing Web Applications) module.</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
